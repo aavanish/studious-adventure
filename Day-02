@@ -1,0 +1,15 @@
+1. Which cloud you are using?
+2. what monitoring tools did you use? 
+3. What parameters and materics you monitor in grafana?
+4. If a pod goes down, how do you monitor that?
+5. Where do we configure pods?
+6. Where do you define probes so that your code can check it?
+7. How do you troubleshoot a pod? 
+8. What are log monitoring, dashboard monitoring how do you use them?
+9. You have pod in VPC and application in different one which is running in your pod s required to connect to a particular service on a particular port. How would u check the connectivity?
+10. which types of pipeline you use?
+11. ENd to end steps of building a pipeline
+12. How to configure a code sent by developer in Jenkins
+13. How to start a jenkins file?
+14. Stages of pipeline
+15. How to call a input in Jenkins?
