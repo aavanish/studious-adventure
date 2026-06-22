@@ -1,0 +1,11 @@
+KUBERNETES 
+WHAT IS KUBECTL? CLI tool for k8s
+
+How to create a pod?
+--- First prpare the yaml file for pod.
+    Paste it inside the control plane.
+    command--> kubectl create -f <pod name>
+    Check for the pod --> kubectl get pods
+                          kubectl get pods -o wide (for illustrated information of pod)
+    Enter the pod --> minikube ssh
+    check running status --> curl <IP Address>
