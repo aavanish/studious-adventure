@@ -1,0 +1,292 @@
+================================================================
+       KUBERNETES INTERVIEW QUESTIONS & ANSWERS
+              (10 Questions — Part 1)
+================================================================
+
+----------------------------------------------------------------
+Q1. What is the difference between Docker and Kubernetes?
+----------------------------------------------------------------
+
+Answer:
+
+Docker is a container platform, while Kubernetes is a container
+orchestration platform.
+
+Containers are ephemeral in nature — they can go down for
+multiple reasons, and when they do, the application becomes
+unavailable to end users. To avoid this, you move to a container
+orchestration platform like Kubernetes, which offers:
+
+  • Auto-healing — if a pod goes down, Kubernetes automatically
+    restarts it.
+
+  • Auto-scaling — Kubernetes can scale pods up or down based
+    on load.
+
+  • Cluster-level resilience — unlike Docker, which is a single-
+    node platform, Kubernetes combines multiple virtual machines
+    into a cluster. If one node goes down, Kubernetes moves the
+    pod to a different node automatically.
+
+  • Enterprise capabilities — load balancing, Custom Resource
+    Definitions (CRDs), and support for third-party controllers
+    like Ingress controllers that extend its capabilities.
+
+In short: Docker runs containers on a single machine; Kubernetes
+manages containers at scale across a cluster of machines.
+
+----------------------------------------------------------------
+Q2. What are the main components of Kubernetes architecture?
+----------------------------------------------------------------
+
+Answer:
+
+Kubernetes architecture is divided into two planes:
+
+  CONTROL PLANE (Master Node):
+  - API Server      : Handles all API requests; the front door
+                      to the Kubernetes cluster.
+  - Scheduler       : Responsible for scheduling pods onto
+                      appropriate worker nodes.
+  - etcd            : A key-value store that holds all Kubernetes
+                      object/resource data.
+  - Controller Mgr  : Manages default controllers such as
+                      ReplicaSet and ReplicationController to
+                      maintain desired state.
+  - Cloud Controller: Contains cloud-provider-specific logic
+    Manager           (e.g., AWS, Azure) to create load balancer
+                      IPs when a LoadBalancer service is created.
+
+  DATA PLANE (Worker Nodes):
+  - Kubelet         : Manages pod lifecycle on each worker node;
+                      watches pods and notifies the API server
+                      if a pod goes down.
+  - Kube Proxy      : Handles networking rules on each node;
+                      updates IP tables to route traffic to the
+                      correct pod.
+  - Container Runtime: The runtime required to run containers
+                       (e.g., containerd, CRI-O, Docker shim).
+                       Kubernetes is not opinionated — you choose
+                       and install the runtime on each node.
+
+----------------------------------------------------------------
+Q3. What are the main differences between Docker Swarm
+    and Kubernetes?
+----------------------------------------------------------------
+
+Answer:
+
+  Docker Swarm:
+  - Docker-native solution, easy to install and use.
+  - Best suited for small-scale or simple applications.
+  - Limited advanced networking and scaling options.
+  - Smaller ecosystem and community support.
+
+  Kubernetes:
+  - Suited for mid-scale to large enterprise applications.
+  - Supports advanced networking (Flannel, Calico, OVN, etc.).
+  - Highly extensible via Custom Resource Definitions (CRDs)
+    and the active CNCF community.
+  - Much larger job market demand — nearly every DevOps job
+    listing includes Kubernetes.
+
+Summary: Use Docker Swarm for simplicity at small scale. Choose
+Kubernetes for production-grade, scalable, enterprise workloads.
+
+----------------------------------------------------------------
+Q4. What is the difference between a Docker container
+    and a Kubernetes Pod?
+----------------------------------------------------------------
+
+Answer:
+
+A Docker container is a running instance of a container image
+on a single machine.
+
+A Pod is the lowest-level deployable unit in Kubernetes. It is
+essentially a runtime specification written in a YAML file that
+defines everything a container needs to run. Key differences:
+
+  • A pod can hold one or multiple containers.
+  • Containers within the same pod share the same network
+    (they can communicate via localhost) and the same storage
+    volumes.
+  • A pod abstracts the container and gives Kubernetes the
+    metadata it needs to manage, schedule, and restart it.
+
+Simply put: a Pod is a wrapper or runtime specification around
+one or more containers, managed by Kubernetes.
+
+----------------------------------------------------------------
+Q5. What is a Namespace in Kubernetes?
+----------------------------------------------------------------
+
+Answer:
+
+A Kubernetes Namespace is a logical isolation of resources
+within a single cluster.
+
+In a real-world scenario, a company may have 20 different teams
+working on 20 different microservices — all deployed on the same
+Kubernetes cluster. Creating a separate cluster for each project
+is not practical in production.
+
+Namespaces solve this by letting multiple teams share one
+cluster while remaining logically separated:
+
+  • Each team or project gets its own namespace (e.g.,
+    namespace-a, namespace-b).
+  • Resources, deployments, and services in namespace-a are
+    isolated from namespace-b.
+  • Access is controlled using RBAC (Role-Based Access Control).
+  • Network policies and resource quotas can be applied per
+    namespace.
+
+One-line answer: A Kubernetes Namespace is a logical boundary
+that allows multiple teams or projects to coexist on the same
+cluster without interfering with each other.
+
+----------------------------------------------------------------
+Q6. What is the role of Kube Proxy?
+----------------------------------------------------------------
+
+Answer:
+
+Kube Proxy is a networking component that runs on every worker
+node. Its primary job is to configure network rules (IP tables)
+on each node so that traffic is correctly routed to the right
+pod.
+
+Example: When a developer creates a Service of type NodePort,
+Kube Proxy updates the IP tables on that node so that any
+request coming in on [Node IP]:[Port] is forwarded to the
+correct pod.
+
+  • Default mode: IP tables-based routing.
+  • Alternative: IPVS mode (higher performance for large
+    clusters).
+
+In short: Kube Proxy ensures the networking and routing rules
+are in place so that services can reach their pods correctly.
+
+----------------------------------------------------------------
+Q7. What are the different types of Services in Kubernetes?
+----------------------------------------------------------------
+
+Answer:
+
+A Kubernetes Service serves three main purposes:
+  1. Service Discovery
+  2. Load Balancing
+  3. Exposing applications to the outside world
+
+There are three types of Services:
+
+  1. ClusterIP (default):
+     - Assigns an internal cluster IP to the service.
+     - Accessible ONLY within the Kubernetes cluster.
+     - Use case: internal communication between microservices.
+
+  2. NodePort:
+     - Exposes the service on each node's IP at a static port.
+     - Accessible to anyone within your organization who can
+       reach the node's IP address.
+     - Format: [Node IP]:[NodePort]
+     - Use case: internal or dev/test exposure.
+
+  3. LoadBalancer:
+     - Creates a public IP / load balancer via the Cloud
+       Controller Manager (e.g., AWS ELB, Azure LB).
+     - Accessible to anyone on the internet.
+     - Use case: exposing production applications externally.
+
+Note: Ingress can also expose applications externally and is
+often preferred over LoadBalancer for HTTP/HTTPS routing.
+
+----------------------------------------------------------------
+Q8. What is the difference between NodePort and
+    LoadBalancer type Services?
+----------------------------------------------------------------
+
+Answer:
+
+  NodePort:
+  - Exposes the application on the worker node's IP + a port.
+  - Only accessible to users who can reach the node's IP
+    (i.e., inside your organization or network).
+  - Example: EC2-based cluster in AWS — only users with access
+    to the EC2 instance's IP can reach the app.
+
+  LoadBalancer:
+  - Triggers the Cloud Controller Manager to provision a public
+    IP or cloud load balancer automatically.
+  - Accessible to anyone on the internet, regardless of
+    network access.
+  - Use case: exposing production-grade applications to
+    external end users globally.
+
+Key difference: NodePort = internal/org-level access;
+LoadBalancer = public internet access.
+
+----------------------------------------------------------------
+Q9. What is the role of Kubelet?
+----------------------------------------------------------------
+
+Answer:
+
+Kubelet is an agent that runs on every worker node and is
+responsible for managing the pod lifecycle on that node.
+
+How it works:
+  • When the Kube Scheduler places a pod on a worker node,
+    Kubelet takes over and ensures that pod is running.
+  • Kubelet continuously watches the pod's health status.
+  • If the pod goes down, Kubelet immediately notifies the
+    API Server.
+  • The API Server then informs the ReplicaSet Controller,
+    which spins up a new pod to maintain the desired replica
+    count.
+
+In short: Kubelet is the node-level guardian of pods. It
+ensures pods are running as expected and reports their status
+back to the control plane.
+
+----------------------------------------------------------------
+Q10. What are your day-to-day activities on Kubernetes?
+----------------------------------------------------------------
+
+Answer:
+
+As a DevOps Engineer working with Kubernetes, day-to-day
+activities typically include:
+
+  • Cluster Management: Managing and maintaining Kubernetes
+    clusters — including master nodes and worker nodes.
+
+  • Application Deployment: Ensuring applications are deployed
+    correctly onto the cluster with no downtime or issues.
+
+  • Monitoring: Setting up and reviewing monitoring on the
+    cluster (Prometheus, Grafana, etc.) to catch issues early.
+
+  • Troubleshooting: Acting as the subject matter expert for
+    Kubernetes issues. When developers face problems with pods,
+    services, or traffic routing inside the cluster, we step
+    in to debug and resolve them.
+
+  • Maintenance: Routine maintenance on worker nodes —
+    upgrading Kubernetes versions, installing mandatory
+    packages, and patching security vulnerabilities.
+
+  • Support & Ticketing: Handling tickets (Jira, etc.) raised
+    by other teams for Kubernetes-related queries and helping
+    them understand or solve cluster-level issues.
+
+This is a straightforward question — answer it confidently.
+The interviewer just wants to know you understand the practical
+scope of a DevOps engineer's Kubernetes responsibilities.
+
+================================================================
+                         END OF DOCUMENT
+          Kubernetes Interview Questions & Answers — Part 1
+================================================================
