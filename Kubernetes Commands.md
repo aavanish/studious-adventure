@@ -1,6 +1,6 @@
 To master Kubernetes management, your core tool is kubectl, which interacts directly with the cluster's API server via a standard syntax structure:
 
-**/kubectl [action] [resource_type] [resource_name] [flags]/**
+**kubectl [action] [resource_type] [resource_name] [flags]**
 
 The following categorized overview progresses from basic exploratory commands to intermediate administration and troubleshooting workflows.
 
