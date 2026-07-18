@@ -1,3 +1,11 @@
+# SSH keygen 
+
+To generate the private and public key, we can use command
+```
+ssh-keygen
+```
+This will create the file in /root/.ssh folder (private key and public key). We can further cat the file and copy public key whenever reqested by team for access generation.
+
 # Add User Commands
 ```
 adduser <username>
