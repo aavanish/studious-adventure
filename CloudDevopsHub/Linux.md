@@ -65,4 +65,23 @@ tar -cvf allfiles.tar myfiles - Zip/tar all files     (Create verbose file)
  
 tar -xvf allfiles.tar  - untar  (extract verbose file)
 
+# Network Command
+
+ifconfig : 
+
+dig www.xyz.com : dns related query (will get the ip address of the servers)
+
+netstat / ss : display connection info
+
+nslookup : dns reltd query
+
+route ww.google.com :
+
+ping : to check connectivity between 2 nodes
+
+hostname : 
+
+curl / wget :
+
+mtr :
 
