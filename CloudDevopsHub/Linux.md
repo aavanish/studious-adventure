@@ -93,3 +93,17 @@ curl / wget :
 
 mtr :
 
+# Device Commands
+
+lsblk
+
+dmseg
+
+cat /proc/cpuinfo
+
+free -m
+
+df -h
+
+lshw
+
