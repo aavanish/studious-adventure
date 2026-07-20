@@ -116,3 +116,6 @@ free -h                   free and used memory
 df                        disk space details
 lshw                      list hardware systeminfo
 ```
+
+
+<img width="1584" height="922" alt="image" src="https://github.com/user-attachments/assets/cbd4bfc6-87e9-453d-9e28-47090c9594bb" />
