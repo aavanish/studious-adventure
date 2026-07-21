@@ -60,35 +60,29 @@ Linux/Unix system administrators to deal with tape drives backup (compressing + 
 
 # Network Command
 
-ifconfig : 
-
-dig www.xyz.com : dns related query (will get the ip address of the servers)
-
-netstat / ss : display connection info
-
-nslookup : dns reltd query
-
-route ww.google.com :
-
-ping : to check connectivity between 2 nodes
-
-hostname : 
-
-curl / wget :
-
-mtr :
+| Command |  Use |
+|--------|--------|
+| ifconfig | IP address and  active network interfaces |
+| sudo ifconfig eth0 up | Bring active network interfaces up |
+| sudo ifconfig eth0 192.168.1.101 netmask 255.255.255.0 | Assign an IP address |
+| ifconfig eth0 | Verify Changes |
+| dig www.xyz.com | dns related query (will get the ip addresses of the servers) |
+| netstat / ss | display connection info |
+| nslookup | dns reltd query |
+| route ww.google.com | view, add, modify, or delete entries in the IP routing table |
+| ping | to check connectivity between 2 nodes |
+| hostname | displays hostname info |
+| curl / wget | Download file from network |
+| mtr | My Trace Route - check network connectivity, diagonise packet loss |
 
 # Device Commands
 
-lsblk
-
-dmseg
-
-cat /proc/cpuinfo
-
-free -m
-
-df -h
-
-lshw
+| Command |  Use |
+|--------|--------|
+| lsblk | Information about block devices |
+| dmesg | troubleshooting hardware and driver issues |
+| cat /proc/cpuinfo | CPU Information |
+| free -m |  shows memory usage -  total, used, and free memor |
+| df -h |  filesystem disk space usage -h human readable |
+| lshw | list hardware CPU, memory, storage, network devices, and buses |
 
