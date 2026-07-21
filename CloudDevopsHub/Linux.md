@@ -1,3 +1,15 @@
+# Filesystem layout
+
+/etc: configuration.
+
+/var: changing runtime data, logs, caches, spools.
+
+/usr: installed software and shared data.
+
+/opt: third-party add-on software.
+
+/tmp: temporary scratch space.
+
 # SSH keygen 
 
 To generate the private and public key, we can use command
