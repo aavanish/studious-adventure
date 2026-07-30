@@ -39,6 +39,7 @@ vmstat   system performance summary (Displays CPU, memory and IO stats every sec
 ## 3. How to Check & Fix Disk Problems?
 ```
 df -h
+df -hi #checks inode usage using  Inode Iused Ifree and iuse% 
 ```
 --------------------------------------------------------------------
 ## 4. How Fix File Permission Issues?
